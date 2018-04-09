@@ -5,17 +5,17 @@
   
   <title>OpenWrt+Raspberry折腾 | 说点啥了</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="序言 本人近期打算深入学习OpenWrt，恰手边有一Raspberry 3, 于是将Raspberry作为硬件载体。  1.第一步：配置Raspberry路由器 计划为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。   USB-to-Ethernet网卡信息如下：    FIXME: code语法没有生效    usb 1-1">
+  <meta name="description" content="序言近期打算深入学习OpenWrt，恰手边有一Raspberry 3, 于是将Raspberry作为硬件载体。 1.第一步：配置Raspberry路由器为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。 USB-to-Ethernet网卡信息如下： usb 1-1: Product: AX88772B usb 1-1: Manu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenWrt+Raspberry折腾">
 <meta property="og:url" content="https://gdzhang2012.github.io/2018/04/05/OpenWrt-Raspberry-1/index.html">
 <meta property="og:site_name" content="说点啥了">
-<meta property="og:description" content="序言 本人近期打算深入学习OpenWrt，恰手边有一Raspberry 3, 于是将Raspberry作为硬件载体。  1.第一步：配置Raspberry路由器 计划为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。   USB-to-Ethernet网卡信息如下：    FIXME: code语法没有生效    usb 1-1">
+<meta property="og:description" content="序言近期打算深入学习OpenWrt，恰手边有一Raspberry 3, 于是将Raspberry作为硬件载体。 1.第一步：配置Raspberry路由器为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。 USB-to-Ethernet网卡信息如下： usb 1-1: Product: AX88772B usb 1-1: Manu">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-05T15:41:51.397Z">
+<meta property="og:updated_time" content="2018-04-09T14:57:03.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenWrt+Raspberry折腾">
-<meta name="twitter:description" content="序言 本人近期打算深入学习OpenWrt，恰手边有一Raspberry 3, 于是将Raspberry作为硬件载体。  1.第一步：配置Raspberry路由器 计划为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。   USB-to-Ethernet网卡信息如下：    FIXME: code语法没有生效    usb 1-1">
+<meta name="twitter:description" content="序言近期打算深入学习OpenWrt，恰手边有一Raspberry 3, 于是将Raspberry作为硬件载体。 1.第一步：配置Raspberry路由器为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。 USB-to-Ethernet网卡信息如下： usb 1-1: Product: AX88772B usb 1-1: Manu">
   
     <link rel="alternate" href="/atom.xml" title="说点啥了" type="application/atom+xml">
   
@@ -106,15 +106,111 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><blockquote>
-<p>本人近期打算深入学习OpenWrt，恰手边有一Raspberry 3, 于是将Raspberry作为硬件载体。</p>
-</blockquote>
-<h2 id="1-第一步：配置Raspberry路由器"><a href="#1-第一步：配置Raspberry路由器" class="headerlink" title="1.第一步：配置Raspberry路由器"></a>1.第一步：配置Raspberry路由器</h2><blockquote>
-<p>计划为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。</p>
-</blockquote>
-<blockquote>
-<p>USB-to-Ethernet网卡信息如下：<br>    <em>FIXME: code语法没有生效</em><br>    usb 1-1: Product: AX88772B<br>    usb 1-1: Manufacturer: ASIX Elec. Corp.</p>
-</blockquote>
+        <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>近期打算深入学习OpenWrt，恰手边有一Raspberry 3, 于是将Raspberry作为硬件载体。</p>
+<h2 id="1-第一步：配置Raspberry路由器"><a href="#1-第一步：配置Raspberry路由器" class="headerlink" title="1.第一步：配置Raspberry路由器"></a>1.第一步：配置Raspberry路由器</h2><p>为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。</p>
+<p>USB-to-Ethernet网卡信息如下：</p>
+<pre><code>usb 1-1: Product: AX88772B
+usb 1-1: Manufacturer: ASIX Elec. Corp.
+</code></pre><p>make menuconfig时添加luci, asix网卡支持：</p>
+<pre><code>$ ./scripts/diffconfig.sh
+
+CONFIG_TARGET_brcm2708=y
+CONFIG_TARGET_brcm2708_bcm2710=y
+CONFIG_TARGET_brcm2708_bcm2710_DEVICE_rpi-3=y
+CONFIG_DEVEL=y
+CONFIG_BUILD_LOG=y
+# CONFIG_FEED_luci is not set
+# CONFIG_FEED_packages is not set
+# CONFIG_FEED_routing is not set
+# CONFIG_FEED_telephony is not set
+CONFIG_PACKAGE_kmod-libphy=y
+CONFIG_PACKAGE_kmod-mii=y
+CONFIG_PACKAGE_kmod-usb-net=y
+CONFIG_PACKAGE_kmod-usb-net-asix=y
+CONFIG_PACKAGE_libiwinfo=y
+CONFIG_PACKAGE_libiwinfo-lua=y
+CONFIG_PACKAGE_liblua=y
+CONFIG_PACKAGE_libubus-lua=y
+CONFIG_PACKAGE_libuci-lua=y
+CONFIG_PACKAGE_lua=y
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-app-firewall=y
+CONFIG_PACKAGE_luci-base=y
+CONFIG_PACKAGE_luci-lib-ip=y
+CONFIG_PACKAGE_luci-lib-jsonc=y
+CONFIG_PACKAGE_luci-lib-nixio=y
+CONFIG_PACKAGE_luci-mod-admin-full=y
+CONFIG_PACKAGE_luci-proto-ipv6=y
+CONFIG_PACKAGE_luci-proto-ppp=y
+CONFIG_PACKAGE_luci-theme-bootstrap=y
+CONFIG_PACKAGE_rpcd=y
+CONFIG_PACKAGE_uhttpd=y
+CONFIG_PACKAGE_uhttpd-mod-ubus=y
+</code></pre><p>Raspberry启动后，可以看到asix网卡已可正常工作,接口名为eth1：</p>
+<pre><code>root@LEDE:/# dmesg | grep asix
+[    6.119302] asix 1-1.5:1.0 eth1: register &apos;asix&apos; at usb-3f980000.usb-1.5, ASIX AX88772B USB 2.0 Ethernet, 00:00:00:00:00:9f
+[    6.136141] usbcore: registered new interface driver asix
+[    8.867363] asix 1-1.5:1.0 eth1: link down
+[   10.790620] asix 1-1.5:1.0 eth1: link up, 100Mbps, full-duplex, lpa 0x4DE1
+</code></pre><p>通过console查看network初始配置：</p>
+<pre><code>root@LEDE:/# cat /etc/config/network 
+
+config interface &apos;loopback&apos;
+        option ifname &apos;lo&apos;
+        option proto &apos;static&apos;
+        option ipaddr &apos;127.0.0.1&apos;
+        option netmask &apos;255.0.0.0&apos;
+
+config globals &apos;globals&apos;
+        option ula_prefix &apos;fdca:3f6e:db20::/48&apos;
+
+config interface &apos;lan&apos;
+        option type &apos;bridge&apos;
+        option ifname &apos;eth0&apos;
+        option proto &apos;static&apos;
+        option ipaddr &apos;192.168.1.1&apos;
+        option netmask &apos;255.255.255.0&apos;
+        option ip6assign &apos;60&apos;
+</code></pre><p>通过修改network配置,将eth1和wlan0桥接，作为逻辑lan,eth0作为逻辑wan:</p>
+<pre><code>root@LEDE:/# cat /etc/config/network
+
+config interface &apos;loopback&apos;
+        option ifname &apos;lo&apos;
+        option proto &apos;static&apos;
+        option ipaddr &apos;127.0.0.1&apos;
+        option netmask &apos;255.0.0.0&apos;
+
+config interface &apos;wan&apos;
+        option ifname &apos;eth0&apos;
+        option proto &apos;dhcp&apos;
+
+config interface &apos;lan&apos;
+        option type &apos;bridge&apos;
+        option ifname &apos;eth1&apos;
+        option proto &apos;static&apos;
+        option ipaddr &apos;192.168.100.1&apos;
+        option netmask &apos;255.255.255.0&apos;
+</code></pre><p>接着修改wireless配置,修改过后的内容如下：</p>
+<pre><code>root@LEDE:/# cat /etc/config/wireless 
+
+config wifi-device &apos;radio0&apos;
+        option type &apos;mac80211&apos;
+        option channel &apos;11&apos;
+        option hwmode &apos;11g&apos;
+        option path &apos;platform/soc/3f300000.mmc/mmc_host/mmc1/mmc1:0001/mmc1:0001:1&apos;
+        option htmode &apos;HT20&apos;
+        option country &apos;00&apos;
+
+config wifi-iface &apos;default_radio0&apos;
+        option device &apos;radio0&apos;
+        option network &apos;lan&apos;
+        option mode &apos;ap&apos;
+        option ssid &apos;LEDE&apos;
+        option encryption &apos;psk2&apos;
+        option key &apos;xxxxxxxx&apos;
+</code></pre><p>最后重启network：</p>
+<pre><code>root@LEDE:/# /etc/init.d/network restart
+</code></pre><p>经过上面的步骤，Raspberry路由器就可以上网了。理解起来，dhcp、firewall等模块会使用network配置中的逻辑lan、wan端，所以不需特别处理。</p>
 
       
     </div>
@@ -125,7 +221,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://gdzhang2012.github.io/2018/04/05/OpenWrt-Raspberry-1/" data-id="cjfmow3ds00003iegk9dvi1gg" class="article-share-link">
+      <a data-url="https://gdzhang2012.github.io/2018/04/05/OpenWrt-Raspberry-1/" data-id="cjfsd724x0000j5eg5y3p28kl" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
