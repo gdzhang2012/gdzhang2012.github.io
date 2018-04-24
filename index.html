@@ -82,6 +82,80 @@
         <div class="col-sm-8 blog-main">
           
   
+    <article id="post-OpenWrt-Raspberry-2" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/24/OpenWrt-Raspberry-2/">使用TRACE target跟踪OpenWrt防火墙Packet flow</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2018/04/24/OpenWrt-Raspberry-2/" class="article-date"><time datetime="2018-04-24T13:28:06.000Z" itemprop="datePublished">2018-04-24</time></a>
+</div>
+
+    
+    
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>看了<a href="https://openwrt.org/docs/guide-user/firewall/firewall_configuration" target="_blank" rel="noopener">OpenWrt firewall</a>文档后，打算通过TRACE target学习/验证文档中的Packet flow一节。</p>
+<h2 id="1-编译TRACE-target"><a href="#1-编译TRACE-target" class="headerlink" title="1.编译TRACE target"></a>1.编译TRACE target</h2><p>make menuconfig时，需要同时选择iptables kernel space和user space模块选项, 如下：</p>
+<pre><code>CONFIG_PACKAGE_kmod-ipt-debug=y
+CONFIG_PACKAGE_iptables-mod-trace=y
+</code></pre><h2 id="2-获取TRACE输出"><a href="#2-获取TRACE输出" class="headerlink" title="2.获取TRACE输出"></a>2.获取TRACE输出</h2><p>首先执行iptables命令，以OUTPUT为例：</p>
+<pre><code>root@LEDE:~# iptables -t raw -A OUTPUT -p icmp -j TRACE
+</code></pre><p>接着执行ping命令：</p>
+<pre><code>root@LEDE:~# ping -c 1 www.baidu.com
+</code></pre><p>继续执行dmesg命令，得到下面的输出：</p>
+<pre><code>root@LEDE:~# dmesg -c
+[79187.886799] TRACE: raw:OUTPUT:rule:2 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79187.910198] TRACE: filter:OUTPUT:rule:2 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79187.933899] TRACE: filter:output_rule:rule:1 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79187.958270] TRACE: filter:OUTPUT:rule:5 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79187.982599] TRACE: filter:zone_wan_output:rule:1 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79188.008030] TRACE: filter:output_wan_rule:rule:1 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79188.034099] TRACE: filter:zone_wan_output:rule:2 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79188.060499] TRACE: filter:zone_wan_dest_ACCEPT:rule:2 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79188.087467] TRACE: nat:POSTROUTING:rule:1 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79188.113336] TRACE: nat:postrouting_rule:rule:1 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79188.139633] TRACE: nat:POSTROUTING:rule:3 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79188.165494] TRACE: nat:zone_wan_postrouting:rule:1 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79188.192156] TRACE: nat:postrouting_wan_rule:rule:1 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0 
+[79188.218820] TRACE: nat:zone_wan_postrouting:rule:2 IN= OUT=eth0 SRC=192.168.1.100 DST=14.215.177.39 LEN=84 TOS=0x00 PREC=0x00 TTL=64 ID=52972 DF PROTO=ICMP TYPE=8 CODE=0 ID=3589 SEQ=0 UID=0 GID=0
+</code></pre>
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://gdzhang2012.github.io/2018/04/24/OpenWrt-Raspberry-2/" data-id="cjgdqrwrc0001lveg7xdamngb" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-OpenWrt-Raspberry-1" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -109,7 +183,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>近期打算深入学习OpenWrt，恰手边有一Raspberry 3, 于是将Raspberry作为硬件载体。</p>
-<h2 id="1-第一步：配置Raspberry路由器"><a href="#1-第一步：配置Raspberry路由器" class="headerlink" title="1.第一步：配置Raspberry路由器"></a>1.第一步：配置Raspberry路由器</h2><p>为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。</p>
+<h2 id="1-配置Raspberry路由器"><a href="#1-配置Raspberry路由器" class="headerlink" title="1.配置Raspberry路由器"></a>1.配置Raspberry路由器</h2><p>为Raspberry添加一USB-to-Ethernet网卡，然后修改OpenWrt网络、防火墙等配置,实现路由器功能。</p>
 <p>USB-to-Ethernet网卡信息如下：</p>
 <pre><code>usb 1-1: Product: AX88772B
 usb 1-1: Manufacturer: ASIX Elec. Corp.
@@ -223,7 +297,7 @@ config wifi-iface &apos;default_radio0&apos;
     
 
     <footer class="article-footer">
-      <a data-url="https://gdzhang2012.github.io/2018/04/05/OpenWrt-Raspberry-1/" data-id="cjftsqq5l00009qegv9m0rf0n" class="article-share-link">
+      <a data-url="https://gdzhang2012.github.io/2018/04/05/OpenWrt-Raspberry-1/" data-id="cjgdqrwr70000lvegv3fvltnm" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -273,7 +347,7 @@ config wifi-iface &apos;default_radio0&apos;
     
 
     <footer class="article-footer">
-      <a data-url="https://gdzhang2012.github.io/2018/04/03/test-my-site/" data-id="cjftsqq5s00029qegcrv2l0ea" class="article-share-link">
+      <a data-url="https://gdzhang2012.github.io/2018/04/03/test-my-site/" data-id="cjgdqrwrl0002lveg2zvj4exk" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -332,7 +406,7 @@ config wifi-iface &apos;default_radio0&apos;
     
 
     <footer class="article-footer">
-      <a data-url="https://gdzhang2012.github.io/2018/04/03/hello-world/" data-id="cjftsqq5q00019qeg68z74jlr" class="article-share-link">
+      <a data-url="https://gdzhang2012.github.io/2018/04/03/hello-world/" data-id="cjgdqrwrm0003lvegp0lezu0l" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -371,7 +445,7 @@ config wifi-iface &apos;default_radio0&apos;
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">April 2018</a><span class="sidebar-module-list-count">3</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">April 2018</a><span class="sidebar-module-list-count">4</span></li></ul>
   </div>
 
 
@@ -380,6 +454,10 @@ config wifi-iface &apos;default_radio0&apos;
   <div class="sidebar-module">
     <h4>Recents</h4>
     <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/2018/04/24/OpenWrt-Raspberry-2/">使用TRACE target跟踪OpenWrt防火墙Packet flow</a>
+        </li>
       
         <li>
           <a href="/2018/04/05/OpenWrt-Raspberry-1/">OpenWrt+Raspberry折腾</a>
