@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2018 | 焦虑...</title>
+  <title>https流程分析 | 焦虑...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="点滴记录">
+  <meta name="description" content="前段时间面试时被问到https连接建立过程，没有回答上来，只笼统地说了两句。其实在以前的工作中也接触过几次https，大多跟安全性问题有关。在解决这些问题时会了解一些https相关的知识，但并不系统，也不全面，并且过一段时间就忘了。所以打算总结一下，做个记录。 https在我理解就是http + ssl。http没有什么连接过程，所以https连接过程也就是ssl的建立过程。ssl连接过程中，cl">
 <meta name="keywords" content="万事开头难，那就从此时开始">
-<meta property="og:type" content="website">
-<meta property="og:title" content="焦虑...">
-<meta property="og:url" content="https://gdzhang2012.github.io/archives/2018/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="https流程分析">
+<meta property="og:url" content="https://gdzhang2012.github.io/2018/05/08/https流程分析/index.html">
 <meta property="og:site_name" content="焦虑...">
-<meta property="og:description" content="点滴记录">
+<meta property="og:description" content="前段时间面试时被问到https连接建立过程，没有回答上来，只笼统地说了两句。其实在以前的工作中也接触过几次https，大多跟安全性问题有关。在解决这些问题时会了解一些https相关的知识，但并不系统，也不全面，并且过一段时间就忘了。所以打算总结一下，做个记录。 https在我理解就是http + ssl。http没有什么连接过程，所以https连接过程也就是ssl的建立过程。ssl连接过程中，cl">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-08T14:51:04.816Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="焦虑...">
-<meta name="twitter:description" content="点滴记录">
+<meta name="twitter:title" content="https流程分析">
+<meta name="twitter:description" content="前段时间面试时被问到https连接建立过程，没有回答上来，只笼统地说了两句。其实在以前的工作中也接触过几次https，大多跟安全性问题有关。在解决这些问题时会了解一些https相关的知识，但并不系统，也不全面，并且过一段时间就忘了。所以打算总结一下，做个记录。 https在我理解就是http + ssl。http没有什么连接过程，所以https连接过程也就是ssl的建立过程。ssl连接过程中，cl">
   
     <link rel="alternate" href="/atom.xml" title="焦虑..." type="application/atom+xml">
   
@@ -54,7 +55,7 @@
           <li><a class=""
                  href="/index.html">Home</a></li>
         
-          <li><a class="active"
+          <li><a class=""
                  href="/archives/">Archives</a></li>
         
       </ul>
@@ -80,120 +81,69 @@
 
     <div class="row">
         <div class="col-sm-8 blog-main">
-          
-  
-  
+          <article id="post-https流程分析" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
     
+  
+    <h1 class="article-title" itemprop="name">
+      https流程分析
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2018/05/08/https流程分析/" class="article-date"><time datetime="2018-05-08T14:19:47.000Z" itemprop="datePublished">2018-05-08</time></a>
+</div>
+
+    
+    
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间面试时被问到https连接建立过程，没有回答上来，只笼统地说了两句。其实在以前的工作中也接触过几次https，大多跟安全性问题有关。在解决这些问题时会了解一些https相关的知识，但并不系统，也不全面，并且过一段时间就忘了。所以打算总结一下，做个记录。</p>
+<p>https在我理解就是http + ssl。http没有什么连接过程，所以https连接过程也就是ssl的建立过程。ssl连接过程中，client与server协商若干选项，并可相互验证对方的身份，牵扯到对称/非对称加密算法、证书与数字签名等等。这些知识在分析https连接建立过程中都会有所涉及，所以先记录下https连接过程这个主干，以后就可以方便地延伸到各个知识点。</p>
+
+      
+    </div>
+
     
       
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://gdzhang2012.github.io/2018/05/08/https流程分析/" data-id="cjgxt5i6u0001bxegr2x2lnfr" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <header class="archive-article-header">
-    
+      
+
+    </footer>
+  </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/08/https流程分析/">https流程分析</a>
-    </h1>
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
   
+  <li role="presentation">
+    <a href="/2018/04/24/OpenWrt-Raspberry-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">使用TRACE target跟踪OpenWrt防火墙Packet flow</span>
+    </a>
+  </li>
+  
+  
+</ul>
 
 
-    <div class="article-datetime">
-  <a href="/2018/05/08/https流程分析/" class="archive-article-date"><time datetime="2018-05-08T14:19:47.000Z" itemprop="datePublished">May 8th</time></a>
-</div>
-
-  </header>
+  
 </article>
-
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <header class="archive-article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/OpenWrt-Raspberry-2/">使用TRACE target跟踪OpenWrt防火墙Packet flow</a>
-    </h1>
-  
-
-
-    <div class="article-datetime">
-  <a href="/2018/04/24/OpenWrt-Raspberry-2/" class="archive-article-date"><time datetime="2018-04-24T13:28:06.000Z" itemprop="datePublished">April 24th</time></a>
-</div>
-
-  </header>
-</article>
-
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <header class="archive-article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/05/OpenWrt-Raspberry-1/">OpenWrt+Raspberry折腾</a>
-    </h1>
-  
-
-
-    <div class="article-datetime">
-  <a href="/2018/04/05/OpenWrt-Raspberry-1/" class="archive-article-date"><time datetime="2018-04-05T14:39:13.000Z" itemprop="datePublished">April 5th</time></a>
-</div>
-
-  </header>
-</article>
-
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <header class="archive-article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/03/test-my-site/">test_my_site</a>
-    </h1>
-  
-
-
-    <div class="article-datetime">
-  <a href="/2018/04/03/test-my-site/" class="archive-article-date"><time datetime="2018-04-03T13:13:43.000Z" itemprop="datePublished">April 3rd</time></a>
-</div>
-
-  </header>
-</article>
-
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <header class="archive-article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/03/hello-world/">Hello World</a>
-    </h1>
-  
-
-
-    <div class="article-datetime">
-  <a href="/2018/04/03/hello-world/" class="archive-article-date"><time datetime="2018-04-03T13:09:07.326Z" itemprop="datePublished">April 3rd</time></a>
-</div>
-
-  </header>
-</article>
-
-  
-  
-    </div></section>
-  
 
 
 

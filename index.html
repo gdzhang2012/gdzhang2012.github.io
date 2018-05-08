@@ -82,6 +82,58 @@
         <div class="col-sm-8 blog-main">
           
   
+    <article id="post-https流程分析" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/08/https流程分析/">https流程分析</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2018/05/08/https流程分析/" class="article-date"><time datetime="2018-05-08T14:19:47.000Z" itemprop="datePublished">2018-05-08</time></a>
+</div>
+
+    
+    
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间面试时被问到https连接建立过程，没有回答上来，只笼统地说了两句。其实在以前的工作中也接触过几次https，大多跟安全性问题有关。在解决这些问题时会了解一些https相关的知识，但并不系统，也不全面，并且过一段时间就忘了。所以打算总结一下，做个记录。</p>
+<p>https在我理解就是http + ssl。http没有什么连接过程，所以https连接过程也就是ssl的建立过程。ssl连接过程中，client与server协商若干选项，并可相互验证对方的身份，牵扯到对称/非对称加密算法、证书与数字签名等等。这些知识在分析https连接建立过程中都会有所涉及，所以先记录下https连接过程这个主干，以后就可以方便地延伸到各个知识点。</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://gdzhang2012.github.io/2018/05/08/https流程分析/" data-id="cjgxt5i6u0001bxegr2x2lnfr" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-OpenWrt-Raspberry-2" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -142,7 +194,7 @@ CONFIG_PACKAGE_iptables-mod-trace=y
     
 
     <footer class="article-footer">
-      <a data-url="https://gdzhang2012.github.io/2018/04/24/OpenWrt-Raspberry-2/" data-id="cjgdu118x00001vegrs6qczep" class="article-share-link">
+      <a data-url="https://gdzhang2012.github.io/2018/04/24/OpenWrt-Raspberry-2/" data-id="cjgxt5i880004bxeg379lkpmv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -297,7 +349,7 @@ config wifi-iface &apos;default_radio0&apos;
     
 
     <footer class="article-footer">
-      <a data-url="https://gdzhang2012.github.io/2018/04/05/OpenWrt-Raspberry-1/" data-id="cjgdu119200011veguzeibh38" class="article-share-link">
+      <a data-url="https://gdzhang2012.github.io/2018/04/05/OpenWrt-Raspberry-1/" data-id="cjgxt5i6p0000bxeg8nzck6gl" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -347,7 +399,7 @@ config wifi-iface &apos;default_radio0&apos;
     
 
     <footer class="article-footer">
-      <a data-url="https://gdzhang2012.github.io/2018/04/03/test-my-site/" data-id="cjgdu119600031veg3ytc6q0h" class="article-share-link">
+      <a data-url="https://gdzhang2012.github.io/2018/04/03/test-my-site/" data-id="cjgxt5i7s0003bxegynmdxx7g" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -406,7 +458,7 @@ config wifi-iface &apos;default_radio0&apos;
     
 
     <footer class="article-footer">
-      <a data-url="https://gdzhang2012.github.io/2018/04/03/hello-world/" data-id="cjgdu119400021vegq6mrw7cs" class="article-share-link">
+      <a data-url="https://gdzhang2012.github.io/2018/04/03/hello-world/" data-id="cjgxt5i730002bxegx4c6bkfc" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -445,7 +497,7 @@ config wifi-iface &apos;default_radio0&apos;
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">April 2018</a><span class="sidebar-module-list-count">4</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">May 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">April 2018</a><span class="sidebar-module-list-count">4</span></li></ul>
   </div>
 
 
@@ -454,6 +506,10 @@ config wifi-iface &apos;default_radio0&apos;
   <div class="sidebar-module">
     <h4>Recents</h4>
     <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/2018/05/08/https流程分析/">https流程分析</a>
+        </li>
       
         <li>
           <a href="/2018/04/24/OpenWrt-Raspberry-2/">使用TRACE target跟踪OpenWrt防火墙Packet flow</a>
